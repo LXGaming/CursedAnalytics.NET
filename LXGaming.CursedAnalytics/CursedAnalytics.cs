@@ -16,7 +16,7 @@ namespace LXGaming.CursedAnalytics {
 
         public const string Id = "cursed_analytics";
         public const string Name = "Cursed Analytics";
-        public const string Version = "1.0.0";
+        public const string Version = "1.0.1";
         public const string Authors = "LX_Gaming";
         public const string Website = "https://lxgaming.github.io/";
         public const string UserAgent = Name + "/" + Version + " (+" + Website + ")";
