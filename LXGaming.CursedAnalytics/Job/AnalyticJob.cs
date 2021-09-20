@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 using LXGaming.CursedAnalytics.Entity;
 using LXGaming.CursedAnalytics.Manager;
 using LXGaming.CursedAnalytics.Storage;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Quartz;
 using Serilog;
 
@@ -22,25 +23,21 @@ namespace LXGaming.CursedAnalytics.Job {
                 return;
             }
 
-            var addons = await WebManager.GetAddonsAsync(projects.Select(model => model.Id).ToArray());
-            if (addons == null || addons.Count == 0) {
-                Log.Warning("Missing Addons");
-                return;
-            }
+            Log.Information("Processing {Count} {Name}", projects.Length, projects.Length == 1 ? "project" : "projects");
 
-            Log.Information("Processing {Count} {Name}", addons.Count, addons.Count == 1 ? "addon" : "addons");
+            foreach (var project in projects) {
+                JObject addon;
+                try {
+                    addon = await WebManager.GetAddonAsync(project.Id);
+                } catch (Exception ex) {
+                    Log.Error(ex, "Encountered an error while getting addon {Name} ({Slug}#{Id})", project.Name, project.Slug, project.Id);
+                    continue;
+                }
 
-            foreach (var addon in addons) {
                 var id = addon.Value<long>("id");
                 var name = addon.Value<string>("name");
                 var slug = addon.Value<string>("slug");
                 var downloads = addon.Value<long>("downloadCount");
-
-                var project = projects.SingleOrDefault(model => model.Id == id);
-                if (project == null) {
-                    Log.Warning("Missing Project {Name} ({Slug}#{Id})", name, slug, id);
-                    continue;
-                }
 
                 if (!string.Equals(project.Name, name) || !string.Equals(project.Slug, slug)) {
                     Log.Information("Project {OldName} ({OldSlug}) -> {NewName} ({NewSlug})", project.Name, project.Slug, name, slug);

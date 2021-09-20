@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using LXGaming.CursedAnalytics.Configuration.Category;
 using LXGaming.CursedAnalytics.Util;
@@ -34,16 +32,14 @@ namespace LXGaming.CursedAnalytics.Manager {
             HttpClient?.Dispose();
         }
 
-        public static async Task<List<JObject>> GetAddonsAsync(params long[] ids) {
-            using var request = new HttpRequestMessage(HttpMethod.Post, "https://addons-ecs.forgesvc.net/api/v2/addon") {
-                Content = new StringContent(JsonConvert.SerializeObject(ids), Encoding.UTF8, "application/json")
-            };
-            using var response = await WebManager.HttpClient.SendAsync(request);
+        public static async Task<JObject> GetAddonAsync(long id) {
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"https://addons-ecs.forgesvc.net/api/v2/addon/{id}");
+            using var response = await HttpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             await using var stream = await response.Content.ReadAsStreamAsync();
             using var streamReader = new StreamReader(stream);
             using var jsonTextReader = new JsonTextReader(streamReader);
-            return Toolbox.JsonSerializer.Deserialize<List<JObject>>(jsonTextReader);
+            return Toolbox.JsonSerializer.Deserialize<JObject>(jsonTextReader);
         }
     }
 }
