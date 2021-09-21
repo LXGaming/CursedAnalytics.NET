@@ -7,6 +7,7 @@ namespace LXGaming.CursedAnalytics.Util {
 
         public static readonly JsonSerializer JsonSerializer = JsonSerializer.CreateDefault(new JsonSerializerSettings {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            FloatParseHandling = FloatParseHandling.Decimal,
             Formatting = Formatting.Indented
         });
     }

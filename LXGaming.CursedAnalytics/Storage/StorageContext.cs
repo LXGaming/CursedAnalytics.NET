@@ -14,6 +14,7 @@ namespace LXGaming.CursedAnalytics.Storage {
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectDownload> ProjectDownloads { get; set; }
         public DbSet<ProjectPoint> ProjectPoints { get; set; }
+        public DbSet<ProjectPopularity> ProjectPopularity { get; set; }
 
         /// <summary>
         ///     Use <see cref="StorageContext.Create()"/>
@@ -43,6 +44,7 @@ namespace LXGaming.CursedAnalytics.Storage {
             modelBuilder.Entity<Project>().HasIndex(model => model.Slug).IsUnique();
             modelBuilder.Entity<ProjectDownload>().HasIndex(model => new {model.ProjectId, model.Timestamp}).IsUnique();
             modelBuilder.Entity<ProjectPoint>().HasIndex(model => new {model.ProjectId, model.Timestamp}).IsUnique();
+            modelBuilder.Entity<ProjectPopularity>().HasIndex(model => new {model.ProjectId, model.Timestamp}).IsUnique();
         }
 
         public override int SaveChanges() {

@@ -34,6 +34,8 @@ namespace LXGaming.CursedAnalytics.Storage.MySql {
             modelBuilder.Entity<ProjectDownload>().Property(model => model.Timestamp).HasColumnType("datetime");
             modelBuilder.Entity<ProjectPoint>().Property(model => model.Timestamp).HasColumnType("datetime");
             modelBuilder.Entity<ProjectPoint>().Property(model => model.Value).HasColumnType("decimal(12,2)");
+            modelBuilder.Entity<ProjectPopularity>().Property(model => model.Timestamp).HasColumnType("datetime");
+            modelBuilder.Entity<ProjectPopularity>().Property(model => model.Score).HasColumnType("decimal(26,16)");
         }
     }
 }
