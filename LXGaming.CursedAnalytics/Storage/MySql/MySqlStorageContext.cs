@@ -33,6 +33,7 @@ namespace LXGaming.CursedAnalytics.Storage.MySql {
             // Fix columns
             modelBuilder.Entity<ProjectDownload>().Property(model => model.Timestamp).HasColumnType("datetime");
             modelBuilder.Entity<ProjectPoint>().Property(model => model.Timestamp).HasColumnType("datetime");
+            modelBuilder.Entity<ProjectPoint>().Property(model => model.Value).HasColumnType("decimal(12,2)");
         }
     }
 }

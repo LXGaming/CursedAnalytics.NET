@@ -15,7 +15,7 @@ namespace LXGaming.CursedAnalytics.Entity {
         public DateTime Timestamp { get; init; }
 
         [Required]
-        public double Value { get; init; }
+        public decimal Value { get; init; }
 
         public virtual Project Project { get; init; }
     }
