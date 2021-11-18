@@ -1,13 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace LXGaming.CursedAnalytics.Configuration.Category {
+namespace LXGaming.CursedAnalytics.Configuration.Category;
 
-    public class GeneralCategory {
+public class GeneralCategory {
 
-        [JsonPropertyName("debug")]
-        public bool Debug;
+    [JsonPropertyName("debug")]
+    public bool Debug;
 
-        [JsonPropertyName("schedule")]
-        public string Schedule = "0 0 12 * * ?";
-    }
+    [JsonPropertyName("schedule")]
+    public string Schedule = "0 0 12 * * ?";
 }

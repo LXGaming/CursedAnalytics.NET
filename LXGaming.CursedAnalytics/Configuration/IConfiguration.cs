@@ -4,44 +4,43 @@ using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
 
-namespace LXGaming.CursedAnalytics.Configuration {
+namespace LXGaming.CursedAnalytics.Configuration;
 
-    public interface IConfiguration {
+public interface IConfiguration {
 
-        Config Config { get; }
+    Config Config { get; }
 
-        Task<bool> LoadConfigurationAsync(CancellationToken cancellationToken = default);
+    Task<bool> LoadConfigurationAsync(CancellationToken cancellationToken = default);
 
-        Task<bool> SaveConfigurationAsync(CancellationToken cancellationToken = default);
+    Task<bool> SaveConfigurationAsync(CancellationToken cancellationToken = default);
 
-        Task<T> LoadFileAsync<T>(string path, CancellationToken cancellationToken = default) {
-            if (File.Exists(path)) {
-                return DeserializeFileAsync<T>(path, cancellationToken);
-            }
-
-            return Task.FromResult(Activator.CreateInstance<T>());
+    Task<T> LoadFileAsync<T>(string path, CancellationToken cancellationToken = default) {
+        if (File.Exists(path)) {
+            return DeserializeFileAsync<T>(path, cancellationToken);
         }
 
-        Task<bool> SaveFileAsync(string path, object value, CancellationToken cancellationToken = default) {
-            if (File.Exists(path) || CreateDirectory(path)) {
-                return SerializeFileAsync(path, value, cancellationToken);
-            }
+        return Task.FromResult(Activator.CreateInstance<T>());
+    }
 
-            return Task.FromResult(false);
+    Task<bool> SaveFileAsync(string path, object value, CancellationToken cancellationToken = default) {
+        if (File.Exists(path) || CreateDirectory(path)) {
+            return SerializeFileAsync(path, value, cancellationToken);
         }
 
-        Task<T> DeserializeFileAsync<T>(string path, CancellationToken cancellationToken = default);
+        return Task.FromResult(false);
+    }
 
-        Task<bool> SerializeFileAsync(string path, object value, CancellationToken cancellationToken = default);
+    Task<T> DeserializeFileAsync<T>(string path, CancellationToken cancellationToken = default);
 
-        static bool CreateDirectory(string path) {
-            try {
-                Directory.CreateDirectory(Path.GetDirectoryName(path) ?? path);
-                return true;
-            } catch (Exception ex) {
-                Log.Error(ex, "Encountered an error while creating {Path}", path);
-                return false;
-            }
+    Task<bool> SerializeFileAsync(string path, object value, CancellationToken cancellationToken = default);
+
+    static bool CreateDirectory(string path) {
+        try {
+            Directory.CreateDirectory(Path.GetDirectoryName(path) ?? path);
+            return true;
+        } catch (Exception ex) {
+            Log.Error(ex, "Encountered an error while creating {Path}", path);
+            return false;
         }
     }
 }
