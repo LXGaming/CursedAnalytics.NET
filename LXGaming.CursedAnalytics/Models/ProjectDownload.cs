@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace LXGaming.CursedAnalytics.Entity;
+namespace LXGaming.CursedAnalytics.Models; 
 
 public class ProjectDownload {
-
+    
     [Key]
     public long Id { get; init; }
 
@@ -17,5 +16,5 @@ public class ProjectDownload {
     [Required]
     public long Value { get; init; }
 
-    public virtual Project Project { get; init; }
+    public virtual Project Project { get; init; } = null!;
 }

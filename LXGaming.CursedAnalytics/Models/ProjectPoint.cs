@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace LXGaming.CursedAnalytics.Entity;
+namespace LXGaming.CursedAnalytics.Models; 
 
 public class ProjectPoint {
-
+    
     [Key]
     public long Id { get; init; }
 
@@ -17,5 +16,5 @@ public class ProjectPoint {
     [Required]
     public decimal Value { get; init; }
 
-    public virtual Project Project { get; init; }
+    public virtual Project Project { get; init; } = null!;
 }

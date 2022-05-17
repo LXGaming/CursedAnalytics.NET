@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace LXGaming.CursedAnalytics.Entity;
+namespace LXGaming.CursedAnalytics.Models; 
 
 public class ProjectPopularity {
-
+    
     [Key]
     public long Id { get; init; }
 
@@ -20,5 +19,5 @@ public class ProjectPopularity {
     [Required]
     public decimal Score { get; init; }
 
-    public virtual Project Project { get; init; }
+    public virtual Project Project { get; init; } = null!;
 }

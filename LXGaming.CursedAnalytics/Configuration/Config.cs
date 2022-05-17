@@ -5,15 +5,15 @@ namespace LXGaming.CursedAnalytics.Configuration;
 
 public class Config {
 
-    [JsonPropertyName("general")]
-    public GeneralCategory GeneralCategory = new();
-
+    [JsonPropertyName("connectionStrings")]
+    public Dictionary<string, string> ConnectionStrings { get; init; } = new();
+    
+    [JsonPropertyName("services")]
+    public ServiceCategory ServiceCategory { get; init; } = new();
+    
     [JsonPropertyName("quartz")]
-    public QuartzCategory QuartzCategory = new();
-
-    [JsonPropertyName("storage")]
-    public StorageCategory StorageCategory = new();
+    public QuartzCategory QuartzCategory { get; init; } = new();
 
     [JsonPropertyName("web")]
-    public WebCategory WebCategory = new();
+    public WebCategory WebCategory { get; init; } = new();
 }

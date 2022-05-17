@@ -1,60 +1,49 @@
-﻿using System;
-using System.IO;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using Serilog;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace LXGaming.CursedAnalytics.Configuration;
 
 public class JsonConfiguration : IConfiguration {
 
     private static readonly JsonSerializerOptions JsonSerializerOptions = new() {
-        IncludeFields = true,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
         WriteIndented = true
     };
 
-    private readonly string _path;
+    private readonly string _configPath;
 
-    public Config Config { get; private set; }
+    public Config? Config { get; private set; }
 
     public JsonConfiguration(string path) {
-        _path = path;
+        _configPath = Path.Combine(path, "config.json");
     }
 
-    public async Task<bool> LoadConfigurationAsync(CancellationToken cancellationToken = default) {
-        var config = await ((IConfiguration) this).LoadFileAsync<Config>(Path.Combine(_path, "config.json"), cancellationToken);
-        if (config == null) {
-            return false;
+    public async Task LoadConfigurationAsync(CancellationToken cancellationToken = default) {
+        Config = await DeserializeFileAsync<Config>(_configPath, cancellationToken);
+    }
+
+    public async Task SaveConfigurationAsync(CancellationToken cancellationToken = default) {
+        await SerializeFileAsync(_configPath, Config, cancellationToken);
+    }
+
+    private async Task<T> DeserializeFileAsync<T>(string path, CancellationToken cancellationToken = default) {
+        if (!File.Exists(path)) {
+            var value = Activator.CreateInstance<T>();
+            await SerializeFileAsync(path, value, cancellationToken);
+            return value;
         }
 
-        Config = config;
-        return true;
+        await using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+        return await JsonSerializer.DeserializeAsync<T>(stream, JsonSerializerOptions, cancellationToken)
+               ?? throw new JsonException($"Failed to deserialize {nameof(T)}");
     }
 
-    public Task<bool> SaveConfigurationAsync(CancellationToken cancellationToken = default) {
-        return ((IConfiguration) this).SaveFileAsync(Path.Combine(_path, "config.json"), Config, cancellationToken);
-    }
-
-    public async Task<T> DeserializeFileAsync<T>(string path, CancellationToken cancellationToken = default) {
-        try {
-            await using var stream = File.OpenRead(path);
-            return await JsonSerializer.DeserializeAsync<T>(stream, JsonSerializerOptions, cancellationToken);
-        } catch (Exception ex) {
-            Log.Error(ex, "Encountered an error while deserializing {Path}", path);
-            return default;
+    private async Task SerializeFileAsync<T>(string path, T value, CancellationToken cancellationToken = default) {
+        if (!File.Exists(path)) {
+            Directory.CreateDirectory(Path.GetDirectoryName(path) ?? path);
         }
-    }
 
-    public async Task<bool> SerializeFileAsync(string path, object value, CancellationToken cancellationToken = default) {
-        try {
-            await using var stream = File.Open(path, FileMode.Create, FileAccess.Write);
-            await JsonSerializer.SerializeAsync(stream, value, JsonSerializerOptions, cancellationToken);
-            return true;
-        } catch (Exception ex) {
-            Log.Error(ex, "Encountered an error while serializing {Path}", path);
-            return false;
-        }
+        await using var stream = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None);
+        await JsonSerializer.SerializeAsync(stream, value, JsonSerializerOptions, cancellationToken);
     }
 }

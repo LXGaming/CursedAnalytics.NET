@@ -1,50 +1,40 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using LXGaming.CursedAnalytics.Entity;
-using LXGaming.CursedAnalytics.Storage.MySql;
+﻿using LXGaming.CursedAnalytics.Models;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LXGaming.CursedAnalytics.Storage;
 
 public class StorageContext : DbContext {
 
-    public DbSet<Project> Projects { get; set; }
-    public DbSet<ProjectDownload> ProjectDownloads { get; set; }
-    public DbSet<ProjectPoint> ProjectPoints { get; set; }
-    public DbSet<ProjectPopularity> ProjectPopularity { get; set; }
-
-    /// <summary>
-    ///     Use <see cref="StorageContext.Create()"/>
-    /// </summary>
-    protected StorageContext() {
+    private static readonly ValueConverter<DateTime, DateTime> DateTimeConverter = new(
+        value => value,
+        value => DateTime.SpecifyKind(value, DateTimeKind.Local));
+    
+    public DbSet<Project> Projects { get; set; } = null!;
+    public DbSet<ProjectDownload> ProjectDownloads { get; set; } = null!;
+    public DbSet<ProjectPoint> ProjectPoints { get; set; } = null!;
+    public DbSet<ProjectPopularity> ProjectPopularity { get; set; } = null!;
+    
+    public StorageContext(DbContextOptions options) : base(options) {
     }
-
-    public static StorageContext Create() {
-        var storageCategory = CursedAnalytics.Instance.Config.StorageCategory;
-        if (string.IsNullOrWhiteSpace(storageCategory.Engine)) {
-            Log.Warning("No storage engine configured");
-            return new StorageContext();
-        }
-
-        if (storageCategory.Engine.Equals("mysql", StringComparison.OrdinalIgnoreCase)) {
-            return new MySqlStorageContext(storageCategory);
-        }
-
-        Log.Warning("Invalid storage engine configured");
-        return new StorageContext();
-    }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
 
+        ApplyDateTimeConverter(modelBuilder);
+        
         // Fix indexes
         modelBuilder.Entity<Project>().HasIndex(model => model.Slug).IsUnique();
-        modelBuilder.Entity<ProjectDownload>().HasIndex(model => new {model.ProjectId, model.Timestamp}).IsUnique();
-        modelBuilder.Entity<ProjectPoint>().HasIndex(model => new {model.ProjectId, model.Timestamp}).IsUnique();
-        modelBuilder.Entity<ProjectPopularity>().HasIndex(model => new {model.ProjectId, model.Timestamp}).IsUnique();
+        modelBuilder.Entity<ProjectDownload>().HasIndex(model => new { model.ProjectId, model.Timestamp }).IsUnique();
+        modelBuilder.Entity<ProjectPoint>().HasIndex(model => new { model.ProjectId, model.Timestamp }).IsUnique();
+        modelBuilder.Entity<ProjectPopularity>().HasIndex(model => new { model.ProjectId, model.Timestamp }).IsUnique();
+        
+        // Fix columns
+        modelBuilder.Entity<ProjectDownload>().Property(model => model.Timestamp).HasColumnType("datetime");
+        modelBuilder.Entity<ProjectPoint>().Property(model => model.Timestamp).HasColumnType("datetime");
+        modelBuilder.Entity<ProjectPoint>().Property(model => model.Value).HasColumnType("decimal(12,2)");
+        modelBuilder.Entity<ProjectPopularity>().Property(model => model.Timestamp).HasColumnType("datetime");
+        modelBuilder.Entity<ProjectPopularity>().Property(model => model.Score).HasColumnType("decimal(26,16)");
     }
 
     public override int SaveChanges() {
@@ -69,8 +59,18 @@ public class StorageContext : DbContext {
             }
 
             var updatedAt = entity.Properties.SingleOrDefault(entry => entry.Metadata.Name.Equals("UpdatedAt"));
-            if (updatedAt != null && (entity.State == EntityState.Added || entity.State == EntityState.Modified)) {
+            if (updatedAt != null && entity.State is EntityState.Added or EntityState.Modified) {
                 updatedAt.CurrentValue = now;
+            }
+        }
+    }
+    
+    private void ApplyDateTimeConverter(ModelBuilder modelBuilder) {
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes()) {
+            foreach (var property in entityType.GetProperties()) {
+                if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?)) {
+                    property.SetValueConverter(DateTimeConverter);
+                }
             }
         }
     }
