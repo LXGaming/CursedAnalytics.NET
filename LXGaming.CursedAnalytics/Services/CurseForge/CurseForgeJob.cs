@@ -63,7 +63,8 @@ public class CurseForgeJob : IJob {
                 ProjectId = project.Id,
                 Timestamp = timestamp,
                 Score = 0,
-                Rank = mod.GamePopularityRank
+                Rank = mod.GamePopularityRank,
+                ThumbsUp = mod.ThumbsUpCount ?? 0
             });
 
             _logger.LogInformation("Processed {Name} ({Slug}#{Id})", project.Name, project.Slug, project.Id);

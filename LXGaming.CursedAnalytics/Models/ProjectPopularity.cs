@@ -19,6 +19,9 @@ public class ProjectPopularity {
     [Obsolete]
     [Required]
     public decimal Score { get; init; }
+    
+    [Required]
+    public long ThumbsUp { get; init; }
 
     public virtual Project Project { get; init; } = null!;
 }
