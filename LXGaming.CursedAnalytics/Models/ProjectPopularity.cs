@@ -16,6 +16,7 @@ public class ProjectPopularity {
     [Required]
     public long Rank { get; init; }
 
+    [Obsolete]
     [Required]
     public decimal Score { get; init; }
 
