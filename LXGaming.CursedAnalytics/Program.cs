@@ -1,10 +1,10 @@
 ﻿using System.IO.Compression;
 using System.Reflection;
 using LXGaming.Common.Hosting;
+using LXGaming.Common.Serilog;
 using LXGaming.CursedAnalytics.Configuration;
 using LXGaming.CursedAnalytics.Configuration.Category;
 using LXGaming.CursedAnalytics.Storage;
-using LXGaming.CursedAnalytics.Utilities.Serilog;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
