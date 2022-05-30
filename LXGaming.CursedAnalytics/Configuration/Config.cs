@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using LXGaming.CursedAnalytics.Configuration.Category;
+using LXGaming.CursedAnalytics.Configuration.Categories;
 
 namespace LXGaming.CursedAnalytics.Configuration;
 

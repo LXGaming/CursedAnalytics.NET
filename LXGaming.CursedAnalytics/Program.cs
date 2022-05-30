@@ -3,7 +3,7 @@ using System.Reflection;
 using LXGaming.Common.Hosting;
 using LXGaming.Common.Serilog;
 using LXGaming.CursedAnalytics.Configuration;
-using LXGaming.CursedAnalytics.Configuration.Category;
+using LXGaming.CursedAnalytics.Configuration.Categories;
 using LXGaming.CursedAnalytics.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

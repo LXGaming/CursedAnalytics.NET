@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace LXGaming.CursedAnalytics.Configuration.Category;
+namespace LXGaming.CursedAnalytics.Configuration.Categories;
 
 public class QuartzCategory {
 

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using LXGaming.CursedAnalytics.Configuration.Category.Services;
+using LXGaming.CursedAnalytics.Configuration.Categories.Services;
 
-namespace LXGaming.CursedAnalytics.Configuration.Category; 
+namespace LXGaming.CursedAnalytics.Configuration.Categories; 
 
 public class ServiceCategory {
 
