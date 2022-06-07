@@ -41,7 +41,7 @@ public class CurseForgeJob : IJob {
         foreach (var project in projects) {
             Mod mod;
             try {
-                mod = (await _curseForgeService.ApiClient.GetModAsync(Convert.ToInt32(project.Id))).Data;
+                mod = (await _curseForgeService.ApiClient.GetModAsync(Convert.ToUInt32(project.Id))).Data;
             } catch (Exception ex) {
                 _logger.LogError(ex, "Encountered an error while getting addon {Name} ({Slug}#{Id})", project.Name, project.Slug, project.Id);
                 continue;
