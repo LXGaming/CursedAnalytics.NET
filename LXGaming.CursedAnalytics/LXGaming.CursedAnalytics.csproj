@@ -7,7 +7,7 @@
         <Nullable>enable</Nullable>
         <RuntimeIdentifiers>linux-x64;win-x64</RuntimeIdentifiers>
         <UserSecretsId>cd0b62ca-1d07-426c-ab3a-fa04ddf86221</UserSecretsId>
-        <VersionPrefix>2.0.1</VersionPrefix>
+        <VersionPrefix>2.0.2</VersionPrefix>
         <Authors>Alex Thomson</Authors>
         <Product>CursedAnalytics</Product>
         <Copyright>Copyright © Alex Thomson</Copyright>
