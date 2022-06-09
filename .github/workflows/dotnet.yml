@@ -1,6 +1,8 @@
 name: .NET
 
 on:
+  create:
+    tags: [ 'v*.*.*' ]
   push:
     branches: [ main ]
   pull_request:
@@ -19,7 +21,34 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore
       run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --configuration Release --no-restore --verbosity normal
+    - name: Publish linux-x64
+      run: dotnet publish --configuration Release --no-restore --output ./dist/linux-x64 --runtime linux-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+    - name: Publish linux-arm64
+      run: dotnet publish --configuration Release --no-restore --output ./dist/linux-arm64 --runtime linux-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+    - name: Publish osx-x64
+      run: dotnet publish --configuration Release --no-restore --output ./dist/osx-x64 --runtime osx-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+    - name: Publish osx-arm64
+      run: dotnet publish --configuration Release --no-restore --output ./dist/osx-arm64 --runtime osx-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+    - name: Publish win-x64
+      run: dotnet publish --configuration Release --no-restore --output ./dist/win-x64 --runtime win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+    - name: Publish win-arm64
+      run: dotnet publish --configuration Release --no-restore --output ./dist/win-arm64 --runtime win-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+    - name: Archive Binaries
+      if: github.event_name == 'create' && github.event.ref_type == 'tag'
+      run: |
+        echo "release_name=${GITHUB_REPOSITORY#*/} ${GITHUB_REF_NAME}" >> $GITHUB_ENV
+        cd $GITHUB_WORKSPACE/dist/linux-x64 && zip -mr ../${GITHUB_REPOSITORY#*/}-linux-x64.zip .
+        cd $GITHUB_WORKSPACE/dist/linux-arm64 && zip -mr ../${GITHUB_REPOSITORY#*/}-linux-arm64.zip .
+        cd $GITHUB_WORKSPACE/dist/osx-x64 && zip -mr ../${GITHUB_REPOSITORY#*/}-osx-x64.zip .
+        cd $GITHUB_WORKSPACE/dist/osx-arm64 && zip -mr ../${GITHUB_REPOSITORY#*/}-osx-arm64.zip .
+        cd $GITHUB_WORKSPACE/dist/win-x64 && zip -mr ../${GITHUB_REPOSITORY#*/}-win-x64.zip .
+        cd $GITHUB_WORKSPACE/dist/win-arm64 && zip -mr ../${GITHUB_REPOSITORY#*/}-win-arm64.zip .
+    - name: Release
+      if: github.event_name == 'create' && github.event.ref_type == 'tag'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ./dist/*
+        generate_release_notes: true
+        name: ${{ env.release_name }}
