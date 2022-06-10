@@ -24,17 +24,17 @@ jobs:
     - name: Test
       run: dotnet test --configuration Release --no-restore --verbosity normal
     - name: Publish linux-x64
-      run: dotnet publish --configuration Release --no-restore --output ./dist/linux-x64 --runtime linux-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+      run: dotnet publish --configuration Release --no-restore --output ./dist/linux-x64 --runtime linux-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
     - name: Publish linux-arm64
-      run: dotnet publish --configuration Release --no-restore --output ./dist/linux-arm64 --runtime linux-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+      run: dotnet publish --configuration Release --no-restore --output ./dist/linux-arm64 --runtime linux-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
     - name: Publish osx-x64
-      run: dotnet publish --configuration Release --no-restore --output ./dist/osx-x64 --runtime osx-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+      run: dotnet publish --configuration Release --no-restore --output ./dist/osx-x64 --runtime osx-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
     - name: Publish osx-arm64
-      run: dotnet publish --configuration Release --no-restore --output ./dist/osx-arm64 --runtime osx-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+      run: dotnet publish --configuration Release --no-restore --output ./dist/osx-arm64 --runtime osx-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
     - name: Publish win-x64
-      run: dotnet publish --configuration Release --no-restore --output ./dist/win-x64 --runtime win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+      run: dotnet publish --configuration Release --no-restore --output ./dist/win-x64 --runtime win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
     - name: Publish win-arm64
-      run: dotnet publish --configuration Release --no-restore --output ./dist/win-arm64 --runtime win-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+      run: dotnet publish --configuration Release --no-restore --output ./dist/win-arm64 --runtime win-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
     - name: Archive Binaries
       if: github.event_name == 'create' && github.event.ref_type == 'tag'
       run: |
