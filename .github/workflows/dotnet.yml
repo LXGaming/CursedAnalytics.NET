@@ -38,13 +38,15 @@ jobs:
     - name: Archive Binaries
       if: github.event_name == 'create' && github.event.ref_type == 'tag'
       run: |
-        echo "release_name=${GITHUB_REPOSITORY#*/} ${GITHUB_REF_NAME}" >> $GITHUB_ENV
         cd $GITHUB_WORKSPACE/dist/linux-x64 && zip -mr ../${GITHUB_REPOSITORY#*/}-linux-x64.zip .
         cd $GITHUB_WORKSPACE/dist/linux-arm64 && zip -mr ../${GITHUB_REPOSITORY#*/}-linux-arm64.zip .
         cd $GITHUB_WORKSPACE/dist/osx-x64 && zip -mr ../${GITHUB_REPOSITORY#*/}-osx-x64.zip .
         cd $GITHUB_WORKSPACE/dist/osx-arm64 && zip -mr ../${GITHUB_REPOSITORY#*/}-osx-arm64.zip .
         cd $GITHUB_WORKSPACE/dist/win-x64 && zip -mr ../${GITHUB_REPOSITORY#*/}-win-x64.zip .
         cd $GITHUB_WORKSPACE/dist/win-arm64 && zip -mr ../${GITHUB_REPOSITORY#*/}-win-arm64.zip .
+    - name: Setup Release
+      if: github.event_name == 'create' && github.event.ref_type == 'tag'
+      run: echo "release_name=${GITHUB_REPOSITORY#*/} ${GITHUB_REF_NAME}" >> $GITHUB_ENV
     - name: Release
       if: github.event_name == 'create' && github.event.ref_type == 'tag'
       uses: softprops/action-gh-release@v1
