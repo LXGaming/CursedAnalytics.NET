@@ -8,8 +8,8 @@
 For [Reward Store](https://authors.curseforge.com/store) analytics check out [cursed-analytics](https://github.com/LXGaming/cursed-analytics)
 
 ## Prerequisites
-- MySQL Database
-- Grafana Instance
+- [Grafana](https://grafana.com/)
+- [MariaDB](https://mariadb.org/) or [MySQL](https://www.mysql.com/)
 
 ## Usage
 ### docker-compose
