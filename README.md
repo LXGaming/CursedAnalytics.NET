@@ -1,7 +1,7 @@
 # CursedAnalytics.NET
 
-[![License](https://lxgaming.github.io/badges/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Docker Pulls](https://img.shields.io/docker/pulls/lxgaming/cursedanalytics)](https://hub.docker.com/r/lxgaming/cursedanalytics)
+[![License](https://img.shields.io/github/license/LXGaming/CursedAnalytics.NET?label=License&cacheSeconds=86400)](https://github.com/LXGaming/CursedAnalytics.NET/blob/main/LICENSE)
+[![Docker Hub](https://img.shields.io/docker/v/lxgaming/cursedanalytics/latest?label=Docker%20Hub)](https://hub.docker.com/r/lxgaming/cursedanalytics)
 
 **Cursed Analytics** is a cursed way of obtaining project analytic data from [CurseForge](https://www.curseforge.com/).
 
@@ -28,4 +28,4 @@ services:
 ```
 
 ## License
-CursedAnalytics.NET is licensed under the [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) license.
+CursedAnalytics.NET is licensed under the [Apache 2.0](https://github.com/LXGaming/CursedAnalytics.NET/blob/main/LICENSE) license.
