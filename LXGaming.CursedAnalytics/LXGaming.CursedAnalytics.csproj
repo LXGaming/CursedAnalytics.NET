@@ -7,7 +7,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <UserSecretsId>cd0b62ca-1d07-426c-ab3a-fa04ddf86221</UserSecretsId>
-        <VersionPrefix>2.0.3</VersionPrefix>
+        <VersionPrefix>2.0.4</VersionPrefix>
         <Authors>Alex Thomson</Authors>
         <Product>CursedAnalytics</Product>
         <Copyright>Copyright © Alex Thomson</Copyright>
