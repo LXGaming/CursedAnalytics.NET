@@ -16,7 +16,7 @@ public class StorageService : IHostedService {
 
     public async Task StartAsync(CancellationToken cancellationToken) {
         await using var scope = _serviceProvider.CreateAsyncScope();
-        var storageContext = scope.ServiceProvider.GetRequiredService<StorageContext>();
+        await using var storageContext = scope.ServiceProvider.GetRequiredService<StorageContext>();
         if (await storageContext.Database.EnsureCreatedAsync(cancellationToken)) {
             _logger.LogInformation("Database Created");
         }
