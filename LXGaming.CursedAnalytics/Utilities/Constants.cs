@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace LXGaming.CursedAnalytics.Utilities; 
+namespace LXGaming.CursedAnalytics.Utilities;
 
 public static class Constants {
 

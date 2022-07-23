@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 using LXGaming.CursedAnalytics.Utilities;
 
-namespace LXGaming.CursedAnalytics.Configuration.Categories.Services; 
+namespace LXGaming.CursedAnalytics.Configuration.Categories.Services;
 
 public class CurseForgeCategory {
-    
+
     [JsonPropertyName("token")]
     public string Token { get; init; } = "";
 
@@ -13,7 +13,7 @@ public class CurseForgeCategory {
 
     [JsonPropertyName("contactEmail")]
     public string ContactEmail { get; set; } = Constants.Application.Website;
-    
+
     [JsonPropertyName("jobEnabled")]
     public bool JobEnabled { get; init; } = false;
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
-namespace LXGaming.CursedAnalytics.Services.CurseForge; 
+namespace LXGaming.CursedAnalytics.Services.CurseForge;
 
 [DisallowConcurrentExecution]
 public class CurseForgeJob : IJob {
@@ -27,9 +27,9 @@ public class CurseForgeJob : IJob {
             _logger.LogWarning("CurseForgeService is unavailable");
             return;
         }
-        
+
         var timestamp = context.ScheduledFireTimeUtc?.LocalDateTime ?? context.FireTimeUtc.LocalDateTime;
-        
+
         var projects = await _storageContext.Projects.ToArrayAsync();
         if (projects.Length == 0) {
             _logger.LogWarning("Missing Projects");
@@ -46,7 +46,7 @@ public class CurseForgeJob : IJob {
                 _logger.LogError(ex, "Encountered an error while getting addon {Name} ({Slug}#{Id})", project.Name, project.Slug, project.Id);
                 continue;
             }
-            
+
             if (!string.Equals(project.Name, mod.Name) || !string.Equals(project.Slug, mod.Slug)) {
                 _logger.LogInformation("Project {OldName} ({OldSlug}) -> {NewName} ({NewSlug})", project.Name, project.Slug, mod.Name, mod.Slug);
                 project.Name = mod.Name;
@@ -58,7 +58,7 @@ public class CurseForgeJob : IJob {
                 Timestamp = timestamp,
                 Value = Convert.ToInt64(mod.DownloadCount)
             });
-            
+
             _storageContext.ProjectPopularity.Add(new ProjectPopularity {
                 ProjectId = project.Id,
                 Timestamp = timestamp,

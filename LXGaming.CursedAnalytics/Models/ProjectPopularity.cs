@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LXGaming.CursedAnalytics.Models; 
+namespace LXGaming.CursedAnalytics.Models;
 
 public class ProjectPopularity {
-    
+
     [Key]
     public long Id { get; init; }
 
@@ -19,7 +19,7 @@ public class ProjectPopularity {
     [Obsolete]
     [Required]
     public decimal Score { get; init; }
-    
+
     [Required]
     public long ThumbsUp { get; init; }
 

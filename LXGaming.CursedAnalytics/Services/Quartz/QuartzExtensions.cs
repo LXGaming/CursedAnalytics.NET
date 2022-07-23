@@ -1,7 +1,7 @@
 ﻿using Quartz;
 using Serilog;
 
-namespace LXGaming.CursedAnalytics.Services.Quartz; 
+namespace LXGaming.CursedAnalytics.Services.Quartz;
 
 public static class QuartzExtensions {
 

@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 
-namespace LXGaming.CursedAnalytics.Utilities; 
+namespace LXGaming.CursedAnalytics.Utilities;
 
 public static class Toolbox {
-    
+
     public static string GetAssembly(string assemblyString, string? packageName = null) {
         return GetAssembly(Assembly.Load(assemblyString), packageName ?? assemblyString);
     }

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace LXGaming.CursedAnalytics.Storage; 
+namespace LXGaming.CursedAnalytics.Storage;
 
 public class StorageService : IHostedService {
 

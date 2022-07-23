@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LXGaming.CursedAnalytics.Models; 
+namespace LXGaming.CursedAnalytics.Models;
 
 public class Project {
-    
+
     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
     public long Id { get; init; }
 

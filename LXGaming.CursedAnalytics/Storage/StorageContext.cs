@@ -9,24 +9,24 @@ public class StorageContext : DbContext {
     private static readonly ValueConverter<DateTime, DateTime> DateTimeConverter = new(
         value => value,
         value => DateTime.SpecifyKind(value, DateTimeKind.Local));
-    
+
     public DbSet<Project> Projects { get; set; } = null!;
     public DbSet<ProjectDownload> ProjectDownloads { get; set; } = null!;
     public DbSet<ProjectPopularity> ProjectPopularity { get; set; } = null!;
-    
+
     public StorageContext(DbContextOptions options) : base(options) {
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
 
         ApplyDateTimeConverter(modelBuilder);
-        
+
         // Fix indexes
         modelBuilder.Entity<Project>().HasIndex(model => model.Slug).IsUnique();
         modelBuilder.Entity<ProjectDownload>().HasIndex(model => new { model.ProjectId, model.Timestamp }).IsUnique();
         modelBuilder.Entity<ProjectPopularity>().HasIndex(model => new { model.ProjectId, model.Timestamp }).IsUnique();
-        
+
         // Fix columns
         modelBuilder.Entity<ProjectDownload>().Property(model => model.Timestamp).HasColumnType("datetime");
         modelBuilder.Entity<ProjectPopularity>().Property(model => model.Timestamp).HasColumnType("datetime");
@@ -60,7 +60,7 @@ public class StorageContext : DbContext {
             }
         }
     }
-    
+
     private void ApplyDateTimeConverter(ModelBuilder modelBuilder) {
         foreach (var entityType in modelBuilder.Model.GetEntityTypes()) {
             foreach (var property in entityType.GetProperties()) {

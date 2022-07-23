@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LXGaming.CursedAnalytics.Models; 
+namespace LXGaming.CursedAnalytics.Models;
 
 public class ProjectDownload {
-    
+
     [Key]
     public long Id { get; init; }
 
