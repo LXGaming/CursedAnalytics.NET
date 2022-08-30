@@ -1,0 +1,20 @@
+{
+  "connectionStrings": {
+    "MySql": "server=127.0.0.1;port=3306;database=curse_analytics;userid=curse_analytics;password=password;pooling=true;maximumpoolsize=2;minimumpoolsize=1;"
+  },
+  "services": {
+    "curseForge": {
+      "token": "",
+      "partnerId": 0,
+      "contactEmail": "",
+      "jobEnabled": true,
+      "jobSchedule": "0 0 12 * * ?"
+    }
+  },
+  "quartz": {
+    "maxConcurrency": 2
+  },
+  "web": {
+    "timeout": 100000
+  }
+}
