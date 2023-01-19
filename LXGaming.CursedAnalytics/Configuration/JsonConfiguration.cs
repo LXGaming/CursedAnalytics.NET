@@ -40,7 +40,10 @@ public class JsonConfiguration : IConfiguration {
 
     private async Task SerializeFileAsync<T>(string path, T value, CancellationToken cancellationToken = default) {
         if (!File.Exists(path)) {
-            Directory.CreateDirectory(Path.GetDirectoryName(path) ?? path);
+            var directory = Path.GetDirectoryName(path);
+            if (!string.IsNullOrEmpty(directory)) {
+                Directory.CreateDirectory(directory);
+            }
         }
 
         await using var stream = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None);
