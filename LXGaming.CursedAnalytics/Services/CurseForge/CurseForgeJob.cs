@@ -41,7 +41,7 @@ public class CurseForgeJob : IJob {
         foreach (var project in projects) {
             Mod mod;
             try {
-                mod = (await _curseForgeService.ApiClient.GetModAsync(Convert.ToUInt32(project.Id))).Data;
+                mod = (await _curseForgeService.ApiClient.GetModAsync(Convert.ToInt32(project.Id))).Data;
             } catch (Exception ex) {
                 _logger.LogError(ex, "Encountered an error while getting addon {Name} ({Slug}#{Id})", project.Name, project.Slug, project.Id);
                 continue;
@@ -64,7 +64,7 @@ public class CurseForgeJob : IJob {
                 Timestamp = timestamp,
                 Score = 0,
                 Rank = mod.GamePopularityRank,
-                ThumbsUp = mod.ThumbsUpCount ?? 0
+                ThumbsUp = mod.ThumbsUpCount
             });
 
             _logger.LogInformation("Processed {Name} ({Slug}#{Id})", project.Name, project.Slug, project.Id);
