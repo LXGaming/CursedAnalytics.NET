@@ -13,7 +13,7 @@ permissions:
 
 env:
   CONFIGURATION: Release
-  DOTNET_VERSION: 6.0.x
+  DOTNET_VERSION: 7.0.x
 
 jobs:
   dotnet:
@@ -36,17 +36,17 @@ jobs:
     - name: Test
       run: dotnet test --configuration "$CONFIGURATION" --no-restore --verbosity normal
     - name: Publish linux-arm64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime linux-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
+      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime linux-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true /p:TrimMode=partial
     - name: Publish linux-x64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime linux-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
+      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime linux-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true /p:TrimMode=partial
     - name: Publish osx-arm64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime osx-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
+      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime osx-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true /p:TrimMode=partial
     - name: Publish osx-x64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime osx-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
+      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime osx-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true /p:TrimMode=partial
     - name: Publish win-arm64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime win-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
+      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime win-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true /p:TrimMode=partial
     - name: Publish win-x64
-      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true
+      run: dotnet publish --configuration "$CONFIGURATION" --no-restore --runtime win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:SuppressTrimAnalysisWarnings=true /p:TrimMode=partial
     - name: Release
       if: github.event_name == 'create' && github.event.ref_type == 'tag'
       uses: softprops/action-gh-release@v1

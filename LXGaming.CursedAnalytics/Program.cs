@@ -57,9 +57,7 @@ try {
 
             options.Add("quartz.threadPool.maxConcurrency", $"{quartzCategory.MaxConcurrency}");
         });
-        services.AddQuartz(configurator => {
-            configurator.UseMicrosoftDependencyInjectionJobFactory();
-        });
+        services.AddQuartz();
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
         services.AddAllServices(Assembly.GetExecutingAssembly());
