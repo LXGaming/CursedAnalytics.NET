@@ -1,0 +1,4 @@
+<linker>
+    <!-- LibLog -->
+    <assembly fullname="Serilog" preserve="all" />
+</linker>

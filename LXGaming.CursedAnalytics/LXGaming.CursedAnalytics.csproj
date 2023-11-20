@@ -11,7 +11,11 @@
         <Authors>Alex Thomson</Authors>
         <Product>CursedAnalytics</Product>
         <Copyright>Copyright © Alex Thomson</Copyright>
-  </PropertyGroup>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <TrimmerRootDescriptor Include="TrimmerRoots.xml" />
+    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="CurseForge.APIClient" Version="2.1.0" />
