@@ -5,10 +5,12 @@ namespace LXGaming.CursedAnalytics.Models;
 
 public class Project {
 
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public long Id { get; init; }
 
-    [Required, MaxLength(255)]
+    [Required]
+    [MaxLength(255)]
     public string Name { get; set; } = null!;
 
     [MaxLength(255)]
