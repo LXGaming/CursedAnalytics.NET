@@ -11,7 +11,7 @@ public class Project {
 
     [Required]
     [MaxLength(255)]
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
     [MaxLength(255)]
     public string? Slug { get; set; }

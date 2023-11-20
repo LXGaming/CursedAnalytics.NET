@@ -10,9 +10,9 @@ public class StorageContext : DbContext {
         value => value,
         value => DateTime.SpecifyKind(value, DateTimeKind.Local));
 
-    public DbSet<Project> Projects { get; set; } = null!;
-    public DbSet<ProjectDownload> ProjectDownloads { get; set; } = null!;
-    public DbSet<ProjectPopularity> ProjectPopularity { get; set; } = null!;
+    public required DbSet<Project> Projects { get; set; }
+    public required DbSet<ProjectDownload> ProjectDownloads { get; set; }
+    public required DbSet<ProjectPopularity> ProjectPopularity { get; set; }
 
     public StorageContext(DbContextOptions options) : base(options) {
     }
