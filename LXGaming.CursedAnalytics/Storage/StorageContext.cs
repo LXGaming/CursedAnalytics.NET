@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LXGaming.CursedAnalytics.Storage;
 
-public class StorageContext : DbContext {
+public class StorageContext(DbContextOptions options) : DbContext(options) {
 
     private static readonly ValueConverter<DateTime, DateTime> DateTimeConverter = new(
         value => value,
@@ -13,9 +13,6 @@ public class StorageContext : DbContext {
     public required DbSet<Project> Projects { get; set; }
     public required DbSet<ProjectDownload> ProjectDownloads { get; set; }
     public required DbSet<ProjectPopularity> ProjectPopularity { get; set; }
-
-    public StorageContext(DbContextOptions options) : base(options) {
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);

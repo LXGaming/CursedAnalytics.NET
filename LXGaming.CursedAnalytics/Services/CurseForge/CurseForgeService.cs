@@ -1,5 +1,7 @@
 ﻿using CurseForge.APIClient;
 using LXGaming.Common.Hosting;
+using LXGaming.Configuration;
+using LXGaming.Configuration.Generic;
 using LXGaming.CursedAnalytics.Configuration;
 using LXGaming.CursedAnalytics.Services.Quartz;
 using LXGaming.CursedAnalytics.Utilities;
@@ -11,39 +13,34 @@ using Quartz;
 namespace LXGaming.CursedAnalytics.Services.CurseForge;
 
 [Service(ServiceLifetime.Singleton)]
-public class CurseForgeService : IHostedService {
+public class CurseForgeService(
+    IConfiguration configuration,
+    ILogger<CurseForgeService> logger,
+    ISchedulerFactory schedulerFactory) : IHostedService {
 
     public ApiClient? ApiClient { get; private set; }
 
-    private readonly IConfiguration _configuration;
-    private readonly ILogger<CurseForgeService> _logger;
-    private readonly ISchedulerFactory _schedulerFactory;
-
-    public CurseForgeService(IConfiguration configuration, ILogger<CurseForgeService> logger, ISchedulerFactory schedulerFactory) {
-        _configuration = configuration;
-        _logger = logger;
-        _schedulerFactory = schedulerFactory;
-    }
+    private readonly IProvider<Config> _config = configuration.GetRequiredProvider<IProvider<Config>>();
 
     public async Task StartAsync(CancellationToken cancellationToken) {
-        var curseForgeCategory = _configuration.Config?.ServiceCategory.CurseForgeCategory;
+        var curseForgeCategory = _config.Value?.ServiceCategory.CurseForgeCategory;
         if (curseForgeCategory == null) {
             throw new InvalidOperationException("CurseForgeCategory is unavailable");
         }
 
         if (string.IsNullOrWhiteSpace(curseForgeCategory.Token)) {
-            _logger.LogWarning("Token has not been configured for CurseForge");
+            logger.LogWarning("Token has not been configured for CurseForge");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(curseForgeCategory.ContactEmail)) {
-            _logger.LogWarning("ContactEmail is out of bounds. Resetting to {Value}", Constants.Application.Website);
+            logger.LogWarning("ContactEmail is out of bounds. Resetting to {Value}", Constants.Application.Website);
             curseForgeCategory.ContactEmail = Constants.Application.Website;
         }
 
         ApiClient = new ApiClient(curseForgeCategory.Token, curseForgeCategory.PartnerId, curseForgeCategory.ContactEmail);
         if (curseForgeCategory.JobEnabled) {
-            var scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
+            var scheduler = await schedulerFactory.GetScheduler(cancellationToken);
             await scheduler.ScheduleJobAsync<CurseForgeJob>(CurseForgeJob.JobKey, TriggerBuilder.Create().WithCronSchedule(curseForgeCategory.JobSchedule).Build());
         }
     }
