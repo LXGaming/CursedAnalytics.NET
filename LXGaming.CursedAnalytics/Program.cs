@@ -5,6 +5,7 @@ using LXGaming.Common.Hosting;
 using LXGaming.Common.Serilog;
 using LXGaming.Configuration;
 using LXGaming.Configuration.File.Json;
+using LXGaming.Configuration.Hosting;
 using LXGaming.CursedAnalytics.Configuration;
 using LXGaming.CursedAnalytics.Configuration.Categories;
 using LXGaming.CursedAnalytics.Storage;
@@ -42,11 +43,10 @@ try {
     );
 
     var builder = Host.CreateDefaultBuilder(args);
+    builder.UseConfiguration(configuration);
     builder.UseSerilog();
 
     builder.ConfigureServices(services => {
-        services.AddSingleton<IConfiguration>(configuration);
-
         services.AddDbContext<StorageContext>(optionsBuilder => {
             var connectionString = config.Value!.ConnectionStrings["MySql"];
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), contextOptionsBuilder => {
