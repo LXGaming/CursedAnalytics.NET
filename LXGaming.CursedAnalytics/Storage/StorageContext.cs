@@ -10,9 +10,9 @@ public class StorageContext(DbContextOptions options) : DbContext(options) {
         value => value,
         value => DateTime.SpecifyKind(value, DateTimeKind.Local));
 
-    public required DbSet<Project> Projects { get; set; }
-    public required DbSet<ProjectDownload> ProjectDownloads { get; set; }
-    public required DbSet<ProjectPopularity> ProjectPopularity { get; set; }
+    public required DbSet<Project> Projects { get; init; }
+    public required DbSet<ProjectDownload> ProjectDownloads { get; init; }
+    public required DbSet<ProjectPopularity> ProjectPopularity { get; init; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
