@@ -12,6 +12,6 @@ public static class Constants {
         public const string Website = "https://lxgaming.github.io/";
 
         public static readonly string Version = AssemblyUtils.GetAssemblyVersion(Assembly.GetExecutingAssembly());
-        public static readonly string UserAgent = Name + "/" + Version + " (+" + Website + ")";
+        public static readonly string UserAgent = $"{Name}/{Version} (+{Website})";
     }
 }
