@@ -19,12 +19,10 @@ public class StorageContext(DbContextOptions options) : DbContext(options) {
 
         ApplyDateTimeConverter(modelBuilder);
 
-        // Fix indexes
+        // Constraints
         modelBuilder.Entity<Project>().HasIndex(model => model.Slug).IsUnique();
         modelBuilder.Entity<ProjectDownload>().HasIndex(model => new { model.ProjectId, model.Timestamp }).IsUnique();
         modelBuilder.Entity<ProjectPopularity>().HasIndex(model => new { model.ProjectId, model.Timestamp }).IsUnique();
-
-        // Fix columns
         modelBuilder.Entity<ProjectDownload>().Property(model => model.Timestamp).HasColumnType("datetime");
         modelBuilder.Entity<ProjectPopularity>().Property(model => model.Timestamp).HasColumnType("datetime");
         modelBuilder.Entity<ProjectPopularity>().Property(model => model.Score).HasColumnType("decimal(26,16)");
