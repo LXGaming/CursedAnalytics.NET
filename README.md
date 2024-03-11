@@ -19,8 +19,6 @@ version: "3"
 services:
   cursedanalytics:
     container_name: cursedanalytics
-    environment:
-      - TZ=Pacific/Auckland
     image: lxgaming/cursedanalytics:latest
     restart: unless-stopped
     volumes:
