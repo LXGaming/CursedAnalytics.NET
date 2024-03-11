@@ -3,7 +3,6 @@ using LXGaming.Common.Hosting;
 using LXGaming.Configuration;
 using LXGaming.Configuration.Generic;
 using LXGaming.CursedAnalytics.Configuration;
-using LXGaming.CursedAnalytics.Services.Quartz;
 using LXGaming.CursedAnalytics.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,7 +40,10 @@ public class CurseForgeService(
         ApiClient = new ApiClient(curseForgeCategory.Token, curseForgeCategory.PartnerId, curseForgeCategory.ContactEmail);
         if (curseForgeCategory.JobEnabled) {
             var scheduler = await schedulerFactory.GetScheduler(cancellationToken);
-            await scheduler.ScheduleJobAsync<CurseForgeJob>(CurseForgeJob.JobKey, TriggerBuilder.Create().WithCronSchedule(curseForgeCategory.JobSchedule).Build());
+            await scheduler.ScheduleJob(
+                JobBuilder.Create<CurseForgeJob>().WithIdentity(CurseForgeJob.JobKey).Build(),
+                TriggerBuilder.Create().WithCronSchedule(curseForgeCategory.JobSchedule).Build(),
+                cancellationToken);
         }
     }
 
