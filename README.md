@@ -15,7 +15,6 @@ For [Reward Store](https://authors.curseforge.com/store) analytics check out [cu
 ### docker-compose
 Download and use [config.json](https://raw.githubusercontent.com/LXGaming/CursedAnalytics.NET/main/LXGaming.CursedAnalytics/config.json)
 ```yaml
-version: "3"
 services:
   cursedanalytics:
     container_name: cursedanalytics
