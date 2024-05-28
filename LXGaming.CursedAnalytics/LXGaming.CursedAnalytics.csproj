@@ -10,7 +10,7 @@
     <VersionPrefix>2.2.1</VersionPrefix>
     <Authors>Alex Thomson</Authors>
     <Product>CursedAnalytics</Product>
-    <Copyright>Copyright © Alex Thomson</Copyright>
+    <Copyright>© Alex Thomson. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(CI)' == 'true' or '$(DOTNET_RUNNING_IN_CONTAINER)' == 'true'">
