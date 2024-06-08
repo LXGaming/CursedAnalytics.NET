@@ -1,4 +1,4 @@
 <linker>
-    <!-- LibLog -->
-    <assembly fullname="Serilog" preserve="all" />
+  <!-- LibLog -->
+  <assembly fullname="Serilog" preserve="all" />
 </linker>
