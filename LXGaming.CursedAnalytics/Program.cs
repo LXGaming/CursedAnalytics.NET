@@ -53,7 +53,7 @@ try {
                 contextOptionsBuilder.EnableStringComparisonTranslations();
             });
         });
-        services.AddService<StorageService>();
+        services.AddHostedService<StorageService>();
 
         services.Configure<QuartzOptions>(options => {
             var category = config.Value!.QuartzCategory;
