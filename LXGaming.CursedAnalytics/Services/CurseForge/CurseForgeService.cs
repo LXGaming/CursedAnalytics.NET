@@ -22,27 +22,27 @@ public class CurseForgeService(
     private readonly IProvider<Config> _config = configuration.GetRequiredProvider<IProvider<Config>>();
 
     public async Task StartAsync(CancellationToken cancellationToken) {
-        var curseForgeCategory = _config.Value?.ServiceCategory.CurseForgeCategory;
-        if (curseForgeCategory == null) {
+        var category = _config.Value?.ServiceCategory.CurseForgeCategory;
+        if (category == null) {
             throw new InvalidOperationException("CurseForgeCategory is unavailable");
         }
 
-        if (string.IsNullOrWhiteSpace(curseForgeCategory.Token)) {
+        if (string.IsNullOrWhiteSpace(category.Token)) {
             logger.LogWarning("Token has not been configured for CurseForge");
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(curseForgeCategory.ContactEmail)) {
+        if (string.IsNullOrWhiteSpace(category.ContactEmail)) {
             logger.LogWarning("ContactEmail is out of bounds. Resetting to {Value}", Constants.Application.Website);
-            curseForgeCategory.ContactEmail = Constants.Application.Website;
+            category.ContactEmail = Constants.Application.Website;
         }
 
-        ApiClient = new ApiClient(curseForgeCategory.Token, curseForgeCategory.PartnerId, curseForgeCategory.ContactEmail);
-        if (curseForgeCategory.JobEnabled) {
+        ApiClient = new ApiClient(category.Token, category.PartnerId, category.ContactEmail);
+        if (category.JobEnabled) {
             var scheduler = await schedulerFactory.GetScheduler(cancellationToken);
             await scheduler.ScheduleJob(
                 JobBuilder.Create<CurseForgeJob>().WithIdentity(CurseForgeJob.JobKey).Build(),
-                TriggerBuilder.Create().WithCronSchedule(curseForgeCategory.JobSchedule).Build(),
+                TriggerBuilder.Create().WithCronSchedule(category.JobSchedule).Build(),
                 cancellationToken);
         }
     }
