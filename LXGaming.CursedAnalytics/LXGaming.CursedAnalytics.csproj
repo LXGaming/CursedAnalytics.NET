@@ -28,18 +28,18 @@
 
   <ItemGroup>
     <PackageReference Include="CurseForge.APIClient" Version="2.2.0" />
-    <PackageReference Include="LXGaming.Common" Version="1.8.5" />
-    <PackageReference Include="LXGaming.Common.Hosting" Version="1.8.5" />
-    <PackageReference Include="LXGaming.Common.Serilog" Version="1.8.5" />
+    <PackageReference Include="LXGaming.Common" Version="1.8.6" />
+    <PackageReference Include="LXGaming.Common.Hosting" Version="1.8.6" />
+    <PackageReference Include="LXGaming.Common.Serilog" Version="1.8.6" />
     <PackageReference Include="LXGaming.Configuration.Hosting" Version="1.2.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
-    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.9.0" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.0" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File.Archive" Version="1.0.5" />
   </ItemGroup>
 
