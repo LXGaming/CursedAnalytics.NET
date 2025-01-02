@@ -1,9 +1,9 @@
 ﻿using CurseForge.APIClient;
-using LXGaming.Common.Hosting;
 using LXGaming.Configuration;
 using LXGaming.Configuration.Generic;
 using LXGaming.CursedAnalytics.Configuration;
 using LXGaming.CursedAnalytics.Utilities;
+using LXGaming.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
