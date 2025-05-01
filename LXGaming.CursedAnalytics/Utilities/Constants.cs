@@ -8,7 +8,7 @@ public static class Constants {
     public static class Application {
 
         public const string Name = "CursedAnalytics";
-        public const string Authors = "LX_Gaming";
+        public const string Authors = "Alex Thomson";
         public const string Website = "https://lxgaming.github.io/";
 
         public static readonly string Version = AssemblyUtils.GetVersion(Assembly.GetExecutingAssembly(), "Unknown");
