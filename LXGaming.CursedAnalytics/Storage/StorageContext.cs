@@ -42,14 +42,14 @@ public class StorageContext(DbContextOptions options) : DbContext(options) {
         var now = DateTime.Now;
         var entities = ChangeTracker.Entries();
         foreach (var entity in entities) {
-            var createdAt = entity.Properties.SingleOrDefault(entry => entry.Metadata.Name.Equals("CreatedAt"));
+            var createdAt = entity.Properties.SingleOrDefault(property => property.Metadata.Name.Equals("CreatedAt"));
             if (createdAt != null && entity.State == EntityState.Added) {
                 if (createdAt.CurrentValue == null || createdAt.CurrentValue.Equals(default(DateTime))) {
                     createdAt.CurrentValue = now;
                 }
             }
 
-            var updatedAt = entity.Properties.SingleOrDefault(entry => entry.Metadata.Name.Equals("UpdatedAt"));
+            var updatedAt = entity.Properties.SingleOrDefault(property => property.Metadata.Name.Equals("UpdatedAt"));
             if (updatedAt != null && entity.State is EntityState.Added or EntityState.Modified) {
                 updatedAt.CurrentValue = now;
             }
