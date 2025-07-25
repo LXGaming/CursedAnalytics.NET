@@ -32,6 +32,11 @@
     <PackageReference Include="LXGaming.Common.Serilog" Version="1.8.6" />
     <PackageReference Include="LXGaming.Configuration.Hosting" Version="1.2.2" />
     <PackageReference Include="LXGaming.Hosting.Generators" Version="1.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.7" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
