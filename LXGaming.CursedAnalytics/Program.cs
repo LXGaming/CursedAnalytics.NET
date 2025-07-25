@@ -1,7 +1,6 @@
 ﻿using System.IO.Compression;
 using System.Text.Json;
 using LXGaming.Common.Serilog;
-using LXGaming.Configuration;
 using LXGaming.Configuration.File.Json;
 using LXGaming.Configuration.Hosting;
 using LXGaming.CursedAnalytics.Configuration;
@@ -34,8 +33,7 @@ Log.Logger = new LoggerConfiguration()
 Log.Information("Initialising...");
 
 try {
-    var configuration = new DefaultConfiguration();
-    var config = await configuration.LoadJsonFileAsync<Config>(
+    var configuration = await JsonFileConfiguration<Config>.LoadAsync(
         options: new JsonSerializerOptions {
             WriteIndented = true
         }
@@ -47,7 +45,7 @@ try {
 
     builder.ConfigureServices(services => {
         services.AddDbContext<StorageContext>(optionsBuilder => {
-            var connectionString = config.Value!.ConnectionStrings["MySql"];
+            var connectionString = configuration.Value!.ConnectionStrings["MySql"];
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), contextOptionsBuilder => {
                 contextOptionsBuilder.EnableStringComparisonTranslations();
             });
@@ -55,7 +53,7 @@ try {
         services.AddHostedService<StorageService>();
 
         services.Configure<QuartzOptions>(options => {
-            var category = config.Value!.QuartzCategory;
+            var category = configuration.Value!.QuartzCategory;
             if (category.MaxConcurrency <= 0) {
                 Log.Warning("MaxConcurrency is out of bounds. Resetting to {Value}", QuartzCategory.DefaultMaxConcurrency);
                 category.MaxConcurrency = QuartzCategory.DefaultMaxConcurrency;

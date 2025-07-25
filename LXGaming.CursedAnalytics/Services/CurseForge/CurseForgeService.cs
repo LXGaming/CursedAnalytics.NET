@@ -1,5 +1,4 @@
 ﻿using CurseForge.APIClient;
-using LXGaming.Configuration;
 using LXGaming.Configuration.Generic;
 using LXGaming.CursedAnalytics.Configuration;
 using LXGaming.CursedAnalytics.Utilities;
@@ -13,16 +12,14 @@ namespace LXGaming.CursedAnalytics.Services.CurseForge;
 
 [Service(ServiceLifetime.Singleton)]
 public class CurseForgeService(
-    IConfiguration configuration,
+    IConfiguration<Config> configuration,
     ILogger<CurseForgeService> logger,
     ISchedulerFactory schedulerFactory) : IHostedService {
 
     public ApiClient? ApiClient { get; private set; }
 
-    private readonly IProvider<Config> _config = configuration.GetRequiredProvider<IProvider<Config>>();
-
     public async Task StartAsync(CancellationToken cancellationToken) {
-        var category = _config.Value?.ServiceCategory.CurseForgeCategory;
+        var category = configuration.Value?.ServiceCategory.CurseForgeCategory;
         if (category == null) {
             throw new InvalidOperationException("CurseForgeCategory is unavailable");
         }
