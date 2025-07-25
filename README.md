@@ -12,7 +12,7 @@ For [Reward Store](https://authors.curseforge.com/store) analytics check out [cu
 - [MariaDB](https://mariadb.org/) or [MySQL](https://www.mysql.com/)
 
 ## Usage
-### docker-compose
+### Docker Compose
 Download and use [config.json](https://raw.githubusercontent.com/LXGaming/CursedAnalytics.NET/main/LXGaming.CursedAnalytics/config.json)
 ```yaml
 services:
