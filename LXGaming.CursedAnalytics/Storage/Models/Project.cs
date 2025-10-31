@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LXGaming.CursedAnalytics.Models;
+namespace LXGaming.CursedAnalytics.Storage.Models;
 
 public class Project {
 

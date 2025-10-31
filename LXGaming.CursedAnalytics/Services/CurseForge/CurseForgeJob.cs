@@ -1,6 +1,6 @@
 ﻿using CurseForge.APIClient.Models.Mods;
-using LXGaming.CursedAnalytics.Models;
 using LXGaming.CursedAnalytics.Storage;
+using LXGaming.CursedAnalytics.Storage.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Quartz;

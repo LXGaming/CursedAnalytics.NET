@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LXGaming.CursedAnalytics.Models;
+namespace LXGaming.CursedAnalytics.Storage.Models;
 
 public class ProjectDownload {
 

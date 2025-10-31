@@ -1,4 +1,4 @@
-﻿using LXGaming.CursedAnalytics.Models;
+﻿using LXGaming.CursedAnalytics.Storage.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
