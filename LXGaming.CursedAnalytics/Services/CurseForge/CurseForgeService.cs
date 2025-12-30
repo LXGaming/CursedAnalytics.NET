@@ -1,4 +1,4 @@
-﻿using CurseForge.APIClient;
+using CurseForge.APIClient;
 using LXGaming.Configuration.Generic;
 using LXGaming.CursedAnalytics.Configuration;
 using LXGaming.CursedAnalytics.Utilities;

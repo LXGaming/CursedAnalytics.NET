@@ -1,4 +1,4 @@
-﻿using CurseForge.APIClient.Models.Mods;
+using CurseForge.APIClient.Models.Mods;
 using LXGaming.CursedAnalytics.Storage;
 using LXGaming.CursedAnalytics.Storage.Models;
 using Microsoft.EntityFrameworkCore;
