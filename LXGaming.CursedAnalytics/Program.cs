@@ -71,6 +71,9 @@ try {
 
     await host.RunAsync();
     return 0;
+} catch (HostAbortedException ex) when (ex.Source == "Microsoft.EntityFrameworkCore.Design") {
+    Log.Information("The host was aborted by Microsoft.EntityFrameworkCore.Design");
+    return 0;
 } catch (Exception ex) {
     Log.Fatal(ex, "Application failed to initialise");
     return 1;
