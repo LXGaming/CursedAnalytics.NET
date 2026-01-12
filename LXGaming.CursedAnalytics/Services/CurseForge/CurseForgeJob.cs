@@ -41,7 +41,7 @@ public class CurseForgeJob(
             }
 
             if (!string.Equals(project.Name, mod.Name) || !string.Equals(project.Slug, mod.Slug)) {
-                logger.LogInformation("Project {OldName} ({OldSlug}) -> {NewName} ({NewSlug})", project.Name, project.Slug, mod.Name, mod.Slug);
+                logger.LogInformation("Project {OldName} ({OldSlug}) to {NewName} ({NewSlug})", project.Name, project.Slug, mod.Name, mod.Slug);
                 project.Name = mod.Name;
                 project.Slug = mod.Slug;
             }
