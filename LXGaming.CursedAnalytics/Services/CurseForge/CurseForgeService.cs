@@ -14,9 +14,11 @@ namespace LXGaming.CursedAnalytics.Services.CurseForge;
 public class CurseForgeService(
     IConfiguration<Config> configuration,
     ILogger<CurseForgeService> logger,
-    ISchedulerFactory schedulerFactory) : IHostedService {
+    ISchedulerFactory schedulerFactory) : IHostedService, IDisposable {
 
     public ApiClient? ApiClient { get; private set; }
+
+    private bool _disposed;
 
     public async Task StartAsync(CancellationToken cancellationToken) {
         var category = configuration.Value?.ServiceCategory.CurseForgeCategory;
@@ -45,7 +47,23 @@ public class CurseForgeService(
     }
 
     public Task StopAsync(CancellationToken cancellationToken) {
-        ApiClient?.Dispose();
         return Task.CompletedTask;
+    }
+
+    public void Dispose() {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing) {
+        if (_disposed) {
+            return;
+        }
+
+        _disposed = true;
+
+        if (disposing) {
+            ApiClient?.Dispose();
+        }
     }
 }
