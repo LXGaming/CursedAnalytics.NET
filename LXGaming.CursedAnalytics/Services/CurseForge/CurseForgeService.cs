@@ -23,7 +23,7 @@ public class CurseForgeService(
     public async Task StartAsync(CancellationToken cancellationToken) {
         var category = configuration.Value?.ServiceCategory.CurseForgeCategory;
         if (category == null) {
-            throw new InvalidOperationException("CurseForgeCategory is unavailable");
+            throw new InvalidOperationException("CurseForgeCategory is unavailable.");
         }
 
         if (string.IsNullOrWhiteSpace(category.Token)) {
