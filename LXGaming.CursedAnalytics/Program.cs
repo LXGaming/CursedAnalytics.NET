@@ -51,16 +51,15 @@ try {
     });
     builder.Services.AddHostedService<StorageService>();
 
-    builder.Services.Configure<QuartzOptions>(options => {
+    builder.Services.AddQuartz(configurator => {
         var category = configuration.Value!.QuartzCategory;
         if (category.MaxConcurrency <= 0) {
             Log.Warning("MaxConcurrency is out of bounds. Resetting to {Value}", QuartzCategory.DefaultMaxConcurrency);
             category.MaxConcurrency = QuartzCategory.DefaultMaxConcurrency;
         }
 
-        options.Add("quartz.threadPool.maxConcurrency", $"{category.MaxConcurrency}");
+        configurator.UseDefaultThreadPool(category.MaxConcurrency);
     });
-    builder.Services.AddQuartz();
     builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
     builder.Services.AddAllServices();
